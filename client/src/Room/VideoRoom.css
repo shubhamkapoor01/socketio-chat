@@ -1,0 +1,8 @@
+.video {
+	flex: 0.7;
+}
+
+.canvas {
+	margin: 32px;
+	border: 1px solid black;
+}
