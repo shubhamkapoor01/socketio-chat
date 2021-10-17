@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './VideoRoom.css'
 import Sketch from 'react-p5';
+import VideoGrid from './VideoGrid';
 
 function VideoRoom({ socket, name, room }) {
 	const [videoGrid, setVideoGrid] = useState([]);
@@ -62,6 +63,7 @@ function VideoRoom({ socket, name, room }) {
 
 	return (
 		<div className="video">
+			<VideoGrid className="video-grid" socket={ socket } name={ name } room={ room } />
 			<Sketch setup={ setup } draw={ draw } className="canvas" />
 		</div>
 	)

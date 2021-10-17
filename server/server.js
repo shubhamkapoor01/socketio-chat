@@ -10,23 +10,17 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
 	cors: {
-		origin: "http://localhost:3000",
+		origin: "*",
 		methods: ["GET", "POST"],
 	},
 })
 
 var users = [];
-function user(room, id, x, y) {
-	this.room = room;
-	this.id = id;
-	this.x = x;
-	this.y = y;	
-}
 
 io.on('connection', (socket) => {
 
 	socket.on('join-room', (data) => {
-		var tempUser = new user(data.room, socket.id, 400, 100);
+		var tempUser = { room: data, id: socket.id, x: 400, y: 100 };
 		users.push(tempUser);
 		socket.join(data);
 	})
@@ -44,11 +38,17 @@ io.on('connection', (socket) => {
 		}
 		user.x = data.x;
 		user.y = data.y;
-		socket.to(data.room).emit('receive-move', users)
+		let roomUsers = users.filter(user => user.room === data.room);
+		socket.to(data.room).emit('receive-move', roomUsers);
 	})
 
-	socket.on('disconnect', () => {
-
+	socket.on('disconnect', (data) => {
+		let idx = users.findIndex(user => user.id === socket.id);
+		let room = users[idx].room;
+		users[idx].room = -1;
+		let roomUsers = users.filter(user => user.room === room);
+		console.log(roomUsers);
+		socket.emit('receive-move', roomUsers);
 	})
 })
 
