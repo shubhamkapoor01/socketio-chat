@@ -6,7 +6,7 @@ export default function VideoGrid({ socket, name, room }) {
 
 	return (
 		<div id="video-grid">
-			
+			{ /* TODO */ }
 		</div>
 	)
 }
