@@ -5,6 +5,8 @@ const cors = require('cors')
 const { Server } = require('socket.io')
 const { v4: uuidV4 } = require('uuid')
 
+// add peerjs or use twilio from scratch start this.
+
 app.use(cors());
 
 const server = http.createServer(app);
